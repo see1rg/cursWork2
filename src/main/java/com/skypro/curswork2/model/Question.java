@@ -1,7 +1,5 @@
 package com.skypro.curswork2.model;
 
-import com.skypro.curswork2.service.QuestionService;
-
 public class Question {
     String question;
     String answer;
