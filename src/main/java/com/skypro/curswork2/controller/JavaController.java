@@ -1,7 +1,6 @@
 package com.skypro.curswork2.controller;
 
 import com.skypro.curswork2.model.Question;
-import com.skypro.curswork2.service.JavaQuestionService;
 import com.skypro.curswork2.service.QuestionService;
 import jakarta.websocket.server.PathParam;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,30 +10,29 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/java")
+@RequestMapping("/exam")
 public class JavaController{
-    private final  QuestionService questionService;
+    private final  QuestionService service;
 
-    public JavaController(QuestionService questionService) {
-        this.questionService = questionService;
+    public JavaController(QuestionService service) {
+        this.service = service;
     }
 
-    @GetMapping("get")
-   public Collection<Question> getQuestion() {
-
+    @GetMapping("java")
+   public Collection<Question> getQuestions() {
+        return service.getAll();
     }
 
-    @GetMapping("add")
+    @GetMapping("java/add")
     public Question addQuestion(@PathParam("question") String question,
                                 @PathParam("answer") String answer){
-        return questionService.add(question, answer);
+        return service.add(question, answer);
     }
 
-    @GetMapping("remove")
-    public   Question removeQuestion(@PathParam("question") String question,
+    @GetMapping("java/remove")
+    public Question removeQuestion(@PathParam("question") String question,
                                    @PathParam("answer") String answer) {
         Question temp = new Question(question, answer);
-
-       return questionService.remove(temp);
+        return service.remove(temp);
     }
 }

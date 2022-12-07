@@ -3,15 +3,16 @@ package com.skypro.curswork2.service;
 import com.skypro.curswork2.model.Question;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
+
 @Service
 public class JavaQuestionService implements QuestionService{
-    Set<Question> questions;
+    Set<Question> questions = new HashSet<>();
+    Random random = new Random();
     @Override
     public Question add(String question, String answer) {
         Question question1 = new Question(question, answer);
+        questions.add(question1);
         return question1;
     }
 
@@ -24,7 +25,7 @@ public class JavaQuestionService implements QuestionService{
     @Override
     public Question remove(Question question) {
         questions.remove(question);
-        return null; // TODO: 07.12.2022  
+        return question;
     }
 
     @Override
@@ -34,11 +35,7 @@ public class JavaQuestionService implements QuestionService{
 
     @Override
     public Question getRandomQuestion() {
-        return null;
+      return new ArrayList<>(questions).get(random.nextInt(questions.size()));
     }
 
-    public static int getRandom(int amount) {
-        Random rand = new Random();
-        return rand.nextInt(amount);
-    }
 }

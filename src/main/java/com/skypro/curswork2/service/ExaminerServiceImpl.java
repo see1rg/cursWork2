@@ -4,7 +4,10 @@ import com.skypro.curswork2.model.Question;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
+
 @Service
 public class ExaminerServiceImpl implements ExaminerService{
     Random random;
@@ -17,6 +20,13 @@ public class ExaminerServiceImpl implements ExaminerService{
 
     @Override
     public Collection<Question> getQuestions(int amount) {
-        return questionService.getAll();
+        if (amount > questionService.getAll().size() || amount <=0) {
+            throw new ExceedsNumberQuestionsInListException("Количество вопросов превышает количество вопросов в списке");}
+        Set<Question> questions = new HashSet<>();
+        while (questions.size() < amount){
+            questions.add(questionService.getRandomQuestion());
+        }
+        return questions;
     }
 }
+
