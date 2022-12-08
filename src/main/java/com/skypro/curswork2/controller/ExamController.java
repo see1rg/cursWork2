@@ -19,7 +19,7 @@ public class ExamController {
     }
 
     @GetMapping("get/{amount}")
-    public Collection<Question> getQuestion(@PathVariable("amount") int amount){
+    public Collection<Question> getQuestion(@PathVariable("amount") int amount) {
         return examinerService.getQuestions(amount);
     }
 }

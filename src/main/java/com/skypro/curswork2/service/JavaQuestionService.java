@@ -1,16 +1,15 @@
 package com.skypro.curswork2.service;
 
 import com.skypro.curswork2.exception.QuestionNotFoundException;
-import com.skypro.curswork2.exception.RepeatQuestionException;
 import com.skypro.curswork2.model.Question;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-public class JavaQuestionService implements QuestionService{
+public class JavaQuestionService implements QuestionService {
     Set<Question> questions = new HashSet<>();
-    Random random = new Random();
+
     @Override
     public Question add(String question, String answer) {
         return add(new Question(question, answer));
@@ -18,18 +17,15 @@ public class JavaQuestionService implements QuestionService{
 
     @Override
     public Question add(Question question) {
-       if (questions.contains(question)){
-            throw new RepeatQuestionException("Такой вопрос уже есть в списке.");
-        }
         questions.add(question);
         return question;
     }
 
     @Override
     public Question remove(Question question) {
-       if (!questions.contains(question)){
-           throw new QuestionNotFoundException("Не найдено такого вопроса.");
-       }
+        if (!questions.contains(question)) {
+            throw new QuestionNotFoundException("Нет такого вопроса.");
+        }
         questions.remove(question);
         return question;
     }
@@ -41,7 +37,9 @@ public class JavaQuestionService implements QuestionService{
 
     @Override
     public Question getRandomQuestion() {
-      return new ArrayList<>(questions).get(random.nextInt(questions.size()));
+        List<Question> list = new ArrayList<>(questions);
+        int rand = new Random().nextInt(questions.size());
+        return list.get(rand);
     }
 
     @Override

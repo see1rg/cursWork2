@@ -11,28 +11,27 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping("/exam")
-public class JavaController{
-    private final  QuestionService service;
+public class JavaController {
+    private final QuestionService service;
 
     public JavaController(QuestionService service) {
         this.service = service;
     }
 
     @GetMapping("java")
-   public Collection<Question> getQuestions() {
+    public Collection<Question> getQuestions() {
         return service.getAll();
     }
 
     @GetMapping("java/add")
     public Question addQuestion(@PathParam("question") String question,
-                                @PathParam("answer") String answer){
+                                @PathParam("answer") String answer) {
         return service.add(question, answer);
     }
 
     @GetMapping("java/remove")
     public Question removeQuestion(@PathParam("question") String question,
                                    @PathParam("answer") String answer) {
-        Question temp = new Question(question, answer);
-        return service.remove(temp);
+        return service.remove(new Question(question, answer));
     }
 }
